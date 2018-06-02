@@ -22,12 +22,14 @@ void setup() {
   pinMode(blueLED, OUTPUT);
   pinMode(greenLED, OUTPUT);
 
+  Serial.begin(9600);
+
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
   mood = random(20);
-
+  Serial.println(mood);
   if(mood == 0){
     purr();
   }

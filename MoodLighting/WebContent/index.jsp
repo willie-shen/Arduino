@@ -9,9 +9,14 @@
 </head>
 <body>
 
+	<div id = "error"></div>
 	<form name = "myForm" method = "GET" action = "MoodInput">
 		<p>Enter a value between 0-20</p>
-	<input type = "text" name = "moodValue"> <button type = "submit" value = "Submit">Submit</button>
+	<input type = "text" id = "moodValue" name = "moodValue"> <button type = "submit" value = "Submit">Submit</button>
+	<p>0 = purr</p>
+	<p>1 = happy</p>
+	<p>2 = sad</p>
+	<p>Else = Color Blend</p>
 	</form>
 	
 </body>

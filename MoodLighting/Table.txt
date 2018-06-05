@@ -1,0 +1,8 @@
+
+
+Table Should contain
+-ID for each mood input
+-Date
+-Time
+-Mood Input
+-Mood

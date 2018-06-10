@@ -27,7 +27,8 @@ public class MoodInput extends HttpServlet {
 
 	private static SerialPort comPort;
 
-	
+	private String[] moodMappings = new String[21];
+//	private byte[][] valueToArduino;
 
     /**
      * Default constructor. 
@@ -53,7 +54,19 @@ public class MoodInput extends HttpServlet {
 		
 		System.out.println("Your mood is " + moodValue);
 		
-		addMoodToTable(0, "Happy");
+		if(moodValue <= 20 && moodValue >=0)
+			addMoodToTable(moodValue, moodMappings[moodValue]);
+		
+		else
+			addMoodToTable(moodValue, moodMappings[20]);
+		
+		try {
+			Thread.sleep(60000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		response.sendRedirect("index.jsp");
 	}
 
@@ -71,7 +84,18 @@ public class MoodInput extends HttpServlet {
 		System.out.println("Starting Servlet");
 		//comPort = SerialPort.getCommPorts()[4]
 	//	comPort.openPort();
-
+		moodMappings[0] = "purr";
+		moodMappings[1] = "happy";
+		moodMappings[2] = "sad";
+	//	valueToArduino = new Byte[21];
+		//for(int i = 0; i<21; i++) {
+		//	valueToArduino[i] = new byte[1];
+	//		valueToArduino[i][0] = (byte) i;
+	//	}
+				
+		for(int i = 3; i<=20; i++) {
+			moodMappings[i] = "ColorBlend";
+		}
 		//Connect to the database
 		try {
 			DriverManager.registerDriver(new com.mysql.jdbc.Driver ());

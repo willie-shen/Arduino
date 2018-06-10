@@ -60,12 +60,12 @@ public class MoodInput extends HttpServlet {
 		else
 			addMoodToTable(moodValue, moodMappings[20]);
 		
-		try {
+	/*	try {
 			Thread.sleep(60000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		
 		response.sendRedirect("index.jsp");
 	}

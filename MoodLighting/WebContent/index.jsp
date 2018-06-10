@@ -12,7 +12,6 @@
 		var input = parseInt(document.getElementById("moodValue").value);
 	//	https://stackoverflow.com/questions/43015921/checking-if-input-is-integer-using-javascript
 		if(!Number.isInteger(+document.getElementById("moodValue").value)){
-		//	alert("ERROR");
 			document.getElementById("error").innerHTML = "Error: You did not input an integer".fontcolor("red");
 			document.getElementById("moodValue").value = "";
 			document.getElementById("moodValue").reset();
@@ -20,7 +19,7 @@
 			return false;
 		}
 		
-		else if(input < 0 || intpu > 20){
+		else if(input < 0 || input > 20){
 			document.getElementById("error").innerHTML = ("Error: " + input + " is out of Bounds").fontcolor("red");
 			document.getElementById("moodValue").value = "";
 			document.getElementById("moodValue").reset();
@@ -29,10 +28,29 @@
 			
 		}
 		
+		else{
 		document.getElementById("button").disabled = true;
 		//document.getElementById("button").innerHTML = "Please Wait...";
+		
+	
+		
+		var delay;
+		
+		if(input == 0 || input ==1 || input==2)
+		{
+			delay = 60000;
 
-		var countDownDate = new Date(new Date().getTime() + 5000).getTime();
+		}	
+		else{
+			delay = 50000;
+		}
+			
+		var xhttp = new XMLHttpRequest();
+		xhttp.open("GET", "MoodInput"
+				+ "?moodValue=" + input, true);
+		xhttp.send();
+
+		var countDownDate = new Date(new Date().getTime() + delay).getTime();
 
 		// Update the count down every 1 second
 		var x = setInterval(function() {
@@ -62,6 +80,11 @@
 		
 		//
 		//setTimeout(unlock, 2000);
+		document.getElementById("moodValue").value = "";
+		document.getElementById("moodValue").reset();
+	}
+		return true;
+		
 	}
 	
 	function unlock(){
@@ -71,15 +94,15 @@
 </head>
 <body>
 
-	<div id = "error" font color = "red"></div>
-	<form name = "myForm" method = "GET" action = "MoodInput">
+	<div id = "error"></div>
+	
 		<p>Enter a value between 0-20</p>
 	<input type = "text" id = "moodValue" name = "moodValue"> <button type = "submit" id = "button" value = "Submit" onclick = "lock()">Submit</button>
 	<p>0 = purr</p> <!-- 60 seconds -->
 	<p>1 = happy</p> <!-- 60 seconds -->
 	<p>2 = sad</p> <!-- 60 seconds -->
 	<p>Else = Color Blend</p> <!-- 50 seconds -->
-	</form>
+
 	
 </body>
 </html>

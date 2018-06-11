@@ -29,7 +29,10 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   mood = random(20);
-  Serial.println(mood);
+
+  if(Serial.available() > 0){
+  mood = Serial.read();
+  
   if(mood == 0){
     purr();
   }
@@ -45,6 +48,7 @@ void loop() {
     blendColors();
   }
 
+}
 }
 
 void blendColors(){

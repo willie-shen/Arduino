@@ -97,6 +97,14 @@ public class MoodInput extends HttpServlet {
 		System.out.println("Starting Servlet");
 		comPort = SerialPort.getCommPorts()[4];
 		comPort.openPort();
+		
+		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		moodMappings[0] = "purr";
 		moodMappings[1] = "happy";
 		moodMappings[2] = "sad";

@@ -56,7 +56,7 @@ void loop() {
 }
 
 void blendColors(){
-
+newRedValue = random(255);
   if(redValue < newRedValue){
     for(int x = redValue; x<newRedValue; x++){
       analogWrite(redLED, x);
@@ -71,7 +71,7 @@ void blendColors(){
   }
 
   redValue = newRedValue;
-
+newGreenValue = random(255);
   if(greenValue < newGreenValue){
     for(int x = greenValue; x<newGreenValue; x++){
       analogWrite(greenLED, x);
@@ -87,6 +87,7 @@ void blendColors(){
 
   greenValue = newGreenValue;
 
+newBlueValue = random(255);
   if(blueValue < newBlueValue){
     for(int x = blueValue; x<newBlueValue; x++){
       analogWrite(blueLED, x);
@@ -157,7 +158,7 @@ void sad(){
     delay(fadeSpeed);
   }
 
-   for(int x = 255; x>0; x--){
+   for(int x = greenValue; x>0; x--){
     analogWrite(greenLED, x);
     delay(fadeSpeed);
   }

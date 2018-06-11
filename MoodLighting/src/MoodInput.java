@@ -28,7 +28,11 @@ public class MoodInput extends HttpServlet {
 	private static SerialPort comPort;
 
 	private String[] moodMappings = new String[21];
-//	private byte[][] valueToArduino;
+//	
+	private byte[] purr = {'P'};
+	private byte[] happy = {'H'};
+	private byte[] sad = {'S'};
+	private byte[] colorBlend = {'B'};
 
     /**
      * Default constructor. 
@@ -60,13 +64,22 @@ public class MoodInput extends HttpServlet {
 		else
 			addMoodToTable(moodValue, moodMappings[20]);
 		
-	/*	try {
-			Thread.sleep(60000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
+		//send mood to Arduino
 		
+		if(moodValue == 0) {
+			sendToArduino(purr);
+		}
+		
+		else if(moodValue == 1) {
+			sendToArduino(happy);
+		}
+		
+		else if(moodValue == 2) {
+			sendToArduino(sad);
+		}
+		else {
+			sendToArduino(colorBlend);
+		}
 		response.sendRedirect("index.jsp");
 	}
 
@@ -82,17 +95,12 @@ public class MoodInput extends HttpServlet {
 	public void init() throws ServletException {
 		// TODO Auto-generated method stub
 		System.out.println("Starting Servlet");
-		//comPort = SerialPort.getCommPorts()[4]
-	//	comPort.openPort();
+		comPort = SerialPort.getCommPorts()[4];
+		comPort.openPort();
 		moodMappings[0] = "purr";
 		moodMappings[1] = "happy";
 		moodMappings[2] = "sad";
-	//	valueToArduino = new Byte[21];
-		//for(int i = 0; i<21; i++) {
-		//	valueToArduino[i] = new byte[1];
-	//		valueToArduino[i][0] = (byte) i;
-	//	}
-				
+	
 		for(int i = 3; i<=20; i++) {
 			moodMappings[i] = "ColorBlend";
 		}
@@ -144,8 +152,8 @@ public void addMoodToTable(int value, String mood) {
 	}
 }
 
-public void sendToArduino(int value) {
-	
+public void sendToArduino(byte[] value) {
+	comPort.writeBytes(value, 1);
 	
 }
 }

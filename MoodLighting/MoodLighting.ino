@@ -28,23 +28,27 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  mood = random(20);
-
+  //mood = random(20);
+// Serial.println(mood);
   if(Serial.available() > 0){
   mood = Serial.read();
   
-  if(mood == 0){
+  if(mood == 'P'){
+ //if(mood == 0){
     purr();
   }
 
-  if(mood == 1){
+  if(mood == 'H'){
+ // if(mood==1){
     happy();
   }
 
-  if(mood == 2){
+ if(mood == 'S'){
+ //if(mood == 2){
     sad();
   }
-  if(mood > 2){
+ if(mood == 'B'){
+ //if(mood==3){
     blendColors();
   }
 
@@ -120,7 +124,7 @@ void purr(){
 
 void happy(){
 
-  for(int i = greenValue; i<0; i++)
+  for(int i = greenValue; i<255; i++)
   {
     analogWrite(greenLED, i);
     delay(fadeSpeed);

@@ -32,7 +32,7 @@
 			
 			var xhttp = new XMLHttpRequest();
 			xhttp.open("GET", "MoodInput"
-					+ "?moodValue=" + input, true);
+					+ "?moodValue=" + input, false);
 			xhttp.send();
 			
 			
@@ -54,7 +54,7 @@
 		}
 		
 		if(xhttp.responseText.includes("fail")){
-			document.getElementById("error").innerHTML = xhttp.responseText;
+			document.getElementById("error").innerHTML = "REEEEE";
 			var countDownDate1 = new Date(new Date().getTime() + 10000).getTime();
 
 			// Update the count down every 1 second

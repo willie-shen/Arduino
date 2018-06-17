@@ -47,7 +47,7 @@ public class MoodInput extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { //We want to make a thread delay whenever we make a change since there will be a delay for the arduino 
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		//System.out.println("Clicked");
 		int moodValue = -1;
 		try {
@@ -67,7 +67,7 @@ public class MoodInput extends HttpServlet {
 		{	
 			System.out.println("not Connected");
 			//request.getSession().setAttribute("fail", ");
-			//out.println("fail");
+			out.println("fail");
 			//out.close();
 			comPort = SerialPort.getCommPorts()[4];
 			comPort.openPort();

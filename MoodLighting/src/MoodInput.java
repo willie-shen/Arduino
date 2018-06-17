@@ -1,6 +1,7 @@
 
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -55,7 +56,31 @@ public class MoodInput extends HttpServlet {
 			System.out.println("Bad format: will default to something random");
 		}
 		
+		response.setContentType("text/javascript");
+		response.setCharacterEncoding("UTF-8");
+		response.setHeader("Cache-Control", "no-cache");
 		
+
+		 PrintWriter out = response.getWriter();
+		 
+		if(comPort.bytesAvailable()==-1) //if unplugged and not communicating{
+		{	
+			System.out.println("not Connected");
+			//request.getSession().setAttribute("fail", ");
+			//out.println("fail");
+			//out.close();
+			comPort = SerialPort.getCommPorts()[4];
+			comPort.openPort();
+			
+			try {
+				Thread.sleep(10000);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+		}
+		 
 		System.out.println("Your mood is " + moodValue);
 		
 		if(moodValue <= 20 && moodValue >=0)
@@ -80,7 +105,7 @@ public class MoodInput extends HttpServlet {
 		else {
 			sendToArduino(colorBlend);
 		}
-		response.sendRedirect("index.jsp");
+	//	response.sendRedirect("index.jsp");
 	}
 
 	/**
@@ -161,7 +186,9 @@ public void addMoodToTable(int value, String mood) {
 }
 
 public void sendToArduino(byte[] value) {
-	comPort.writeBytes(value, 1);
+	
+	if(comPort.bytesAvailable()!=-1)
+		comPort.writeBytes(value, 1);
 	
 }
 }

@@ -23,6 +23,7 @@ void setup() {
   pinMode(greenLED, OUTPUT);
 
   Serial.begin(9600);
+ // establishContact();
 
 }
 

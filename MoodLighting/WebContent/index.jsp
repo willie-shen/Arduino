@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Mood Pet</title>
 <script>
-	function lock(){
+	function lock(){ //https://stackoverflow.com/questions/21457408/how-to-access-a-servlet-variable-inside-javascript check this
 		
 		var input = parseInt(document.getElementById("moodValue").value);
 	//	https://stackoverflow.com/questions/43015921/checking-if-input-is-integer-using-javascript
@@ -29,12 +29,20 @@
 		}
 		
 		else{
+			
+			var xhttp = new XMLHttpRequest();
+			xhttp.open("GET", "MoodInput"
+					+ "?moodValue=" + input, true);
+			xhttp.send();
+			
+			
+			
 		document.getElementById("button").disabled = true;
 		//document.getElementById("button").innerHTML = "Please Wait...";
 		
 	
 		
-		var delay;
+	
 		
 		if(input == 0 || input ==1 || input==2)
 		{
@@ -44,11 +52,36 @@
 		else{
 			delay = 50000;
 		}
-			
-		var xhttp = new XMLHttpRequest();
-		xhttp.open("GET", "MoodInput"
-				+ "?moodValue=" + input, true);
-		xhttp.send();
+		
+		if(xhttp.responseText.includes("fail")){
+			document.getElementById("error").innerHTML = xhttp.responseText;
+			var countDownDate1 = new Date(new Date().getTime() + 10000).getTime();
+
+			// Update the count down every 1 second
+			var x1 = setInterval(function() {
+
+			  // Get todays date and time
+			  var now1 = new Date().getTime();
+
+			  // Find the distance between now an the count down date
+			  var distance1 = countDownDate1 - now1;
+
+			  // Time calculations for days, hours, minutes and seconds
+			 // var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+			  //var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+			  //var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+			  var seconds1 = Math.floor((distance % (1000 * 60)) / 1000);
+
+			  // Display the result in the element with id="demo"
+			  document.getElementById("button").innerHTML = "Please Wait... " + seconds1 + "s ";
+
+			  // If the count down is finished, write some text 
+			  if (distance1 < 0) {
+			    clearInterval(x1);
+				
+			  }
+			}, 1000);
+		}
 
 		var countDownDate = new Date(new Date().getTime() + delay).getTime();
 

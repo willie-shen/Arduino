@@ -29,92 +29,95 @@
 		}
 		
 		else{
+			document.getElementById("button").disabled = true;
+			document.getElementById("button").innerHTML = "Please Wait... Communicating with Arduino";
 			
 			var xhttp = new XMLHttpRequest();
+			
+			xhttp.onreadystatechange = function() {
+				  if (this.readyState == 4 && this.status == 200) {
+					  var delay = 0;
+						
+						
+						if(input == 0 || input ==1 || input==2)
+						{
+							delay = 60000;
+
+						}	
+						else{
+							delay = 50000;
+						}
+						
+						/*if(xhttp.responseText.includes("fail")){
+							document.getElementById("error").innerHTML = "REEEEE";
+							delay += 10000;
+							
+						}*/
+						
+					
+
+						var countDownDate = new Date(new Date().getTime() + delay).getTime();
+
+						// Update the count down every 1 second
+						var x = setInterval(function() {
+
+						  // Get todays date and time
+						  var now = new Date().getTime();
+
+						  // Find the distance between now an the count down date
+						  var distance = countDownDate - now;
+
+						  // Time calculations for days, hours, minutes and seconds
+						 // var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+						  //var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+						  //var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+						  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+						  // Display the result in the element with id="demo"
+						  
+						/*  if(xhttp.responseText.includes("fail")){
+							  if(input == 0 || input ==1 || input==2){
+								  if(distance > 60){
+									  	document.getElementById("button").innerHTML = "Please Wait... " + (seconds-60) + "s ";
+
+								  }  
+							  }
+							  else{
+								  if(distance > 50){
+									  document.getElementById("button").innerHTML = "Please Wait... " + (seconds-50) + "s ";
+								  }
+								  	
+							  }
+							  
+						  }*/
+						  
+						  document.getElementById("button").innerHTML = "Please Wait... " + seconds + "s ";
+
+						  // If the count down is finished, write some text 
+						  if (distance < 0) {
+						    clearInterval(x);
+							unlock();
+							document.getElementById("button").innerHTML = "Submit"	
+						  }
+						}, 1000);
+						
+						//
+						//setTimeout(unlock, 2000);
+						document.getElementById("moodValue").value = "";
+						document.getElementById("moodValue").reset();
+				  }
+				};
+				
 			xhttp.open("GET", "MoodInput"
-					+ "?moodValue=" + input, false);
+					+ "?moodValue=" + input, true);
+		
 			xhttp.send();
 			
+		
 			
-			
-		document.getElementById("button").disabled = true;
-		//document.getElementById("button").innerHTML = "Please Wait...";
 		
 	
 		
-	
-		
-		if(input == 0 || input ==1 || input==2)
-		{
-			delay = 60000;
-
-		}	
-		else{
-			delay = 50000;
-		}
-		
-		if(xhttp.responseText.includes("fail")){
-			document.getElementById("error").innerHTML = "REEEEE";
-			var countDownDate1 = new Date(new Date().getTime() + 10000).getTime();
-
-			// Update the count down every 1 second
-			var x1 = setInterval(function() {
-
-			  // Get todays date and time
-			  var now1 = new Date().getTime();
-
-			  // Find the distance between now an the count down date
-			  var distance1 = countDownDate1 - now1;
-
-			  // Time calculations for days, hours, minutes and seconds
-			 // var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-			  //var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-			  //var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-			  var seconds1 = Math.floor((distance % (1000 * 60)) / 1000);
-
-			  // Display the result in the element with id="demo"
-			  document.getElementById("button").innerHTML = "Please Wait... " + seconds1 + "s ";
-
-			  // If the count down is finished, write some text 
-			  if (distance1 < 0) {
-			    clearInterval(x1);
-				
-			  }
-			}, 1000);
-		}
-
-		var countDownDate = new Date(new Date().getTime() + delay).getTime();
-
-		// Update the count down every 1 second
-		var x = setInterval(function() {
-
-		  // Get todays date and time
-		  var now = new Date().getTime();
-
-		  // Find the distance between now an the count down date
-		  var distance = countDownDate - now;
-
-		  // Time calculations for days, hours, minutes and seconds
-		 // var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-		  //var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-		  //var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-		  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-		  // Display the result in the element with id="demo"
-		  document.getElementById("button").innerHTML = "Please Wait... " + seconds + "s ";
-
-		  // If the count down is finished, write some text 
-		  if (distance < 0) {
-		    clearInterval(x);
-			unlock();
-			document.getElementById("button").innerHTML = "Submit"	
-		  }
-		}, 1000);
-		
-		//
-		//setTimeout(unlock, 2000);
-		document.getElementById("moodValue").value = "";
-		document.getElementById("moodValue").reset();
 	}
 		return true;
 		

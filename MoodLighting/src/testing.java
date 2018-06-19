@@ -3,8 +3,15 @@ import com.fazecast.jSerialComm.SerialPort;
 public class testing {
 	public static void main(String args[]) {
 		System.out.println(SerialPort.getCommPorts().length);
-		SerialPort comPort = SerialPort.getCommPorts()[4];
-		comPort.openPort();
+		SerialPort comPort = null;
+		try {
+			comPort = SerialPort.getCommPorts()[4];
+			comPort.openPort();
+			
+		}
+		catch(IndexOutOfBoundsException e){
+			
+		}
 		
 		System.out.println("Connected to Arduino");
 		System.out.println("Bytes available" + comPort.bytesAvailable());

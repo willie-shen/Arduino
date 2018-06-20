@@ -34,6 +34,8 @@
 			
 			var xhttp = new XMLHttpRequest();
 			
+			var connected = true;
+			
 			xhttp.onreadystatechange = function() {
 				  if (this.readyState == 4 && this.status == 200) {
 					  var delay = 0;
@@ -48,14 +50,28 @@
 							delay = 50000;
 						}
 						
-						/*if(xhttp.responseText.includes("fail")){
-							document.getElementById("error").innerHTML = "REEEEE";
-							delay += 10000;
+						if(xhttp.responseText.includes("Disconnected")){
 							
-						}*/
+
+							document.getElementById("button").disabled = false;
+							document.getElementById("button").innerHTML = "Submit";
+							
+							document.getElementById("error").innerHTML = "ERROR: Arduino not Connected".fontcolor("red");
+							
+							document.getElementById("moodValue").value = "";
+							document.getElementById("moodValue").reset();
+							
+							connected = false;
+							
+							
+							return;
+						}
 						
 					
-
+						if(!connected){
+							
+							return false;
+						}	
 						var countDownDate = new Date(new Date().getTime() + delay).getTime();
 
 						// Update the count down every 1 second
@@ -97,7 +113,7 @@
 						  if (distance < 0) {
 						    clearInterval(x);
 							unlock();
-							document.getElementById("button").innerHTML = "Submit"	
+							document.getElementById("button").innerHTML = "Submit";	
 						  }
 						}, 1000);
 						
@@ -114,7 +130,7 @@
 			xhttp.send();
 			
 		
-			
+		
 		
 	
 		

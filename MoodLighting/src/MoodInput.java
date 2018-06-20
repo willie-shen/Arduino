@@ -35,6 +35,7 @@ public class MoodInput extends HttpServlet {
 	private byte[] sad = {'S'};
 	private byte[] colorBlend = {'B'};
 
+	private boolean connected = true;
     /**
      * Default constructor. 
      */
@@ -56,6 +57,8 @@ public class MoodInput extends HttpServlet {
 			System.out.println("Bad format: will default to something random");
 		}
 		
+		
+		
 		response.setContentType("text/javascript");
 		response.setCharacterEncoding("UTF-8");
 		response.setHeader("Cache-Control", "no-cache");
@@ -63,23 +66,41 @@ public class MoodInput extends HttpServlet {
 
 		 PrintWriter out = response.getWriter();
 		 
-		if(comPort.bytesAvailable()==-1) //if unplugged and not communicating{
+		
+		 
+		if(!connected || (comPort!=null && comPort.bytesAvailable()==-1) ) //if unplugged and not communicating{
 		{	
 			System.out.println("not Connected");
 			//request.getSession().setAttribute("fail", ");
 			out.println("fail");
 			//out.close();
-			comPort = SerialPort.getCommPorts()[4];
-			comPort.openPort();
 			
 			try {
-				Thread.sleep(10000);
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				comPort = SerialPort.getCommPorts()[4];
+				comPort.openPort();
+			}catch(ArrayIndexOutOfBoundsException e) {
+				connected = false;
+				out.println("Disconnected");
+				return;
 			}
 			
+			connected = true;
+			
+			if(connected) {
+				try {
+					Thread.sleep(10000);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+			
+			
 		}
+		 if(!connected) {
+			 out.println("Disconnected");
+			 return;
+		 }
 		 
 		System.out.println("Your mood is " + moodValue);
 		
@@ -120,15 +141,23 @@ public class MoodInput extends HttpServlet {
 	public void init() throws ServletException {
 		// TODO Auto-generated method stub
 		System.out.println("Starting Servlet");
-		comPort = SerialPort.getCommPorts()[4];
-		comPort.openPort();
 		
 		try {
-			Thread.sleep(10000);
-		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			comPort = SerialPort.getCommPorts()[4];
+			comPort.openPort();
+		}catch(ArrayIndexOutOfBoundsException e) {
+			connected = false;
 		}
+		
+		if(connected) {
+			try {
+				Thread.sleep(10000);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+	
 		
 		moodMappings[0] = "purr";
 		moodMappings[1] = "happy";

@@ -66,7 +66,7 @@ public class MoodInput extends HttpServlet {
 
 		 PrintWriter out = response.getWriter();
 		 
-		
+		 
 		 
 		if(!connected || (comPort!=null && comPort.bytesAvailable()==-1) ) //if unplugged and not communicating{
 		{	

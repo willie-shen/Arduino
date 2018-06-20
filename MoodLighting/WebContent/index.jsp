@@ -73,7 +73,7 @@
 							return false;
 						}	
 						var countDownDate = new Date(new Date().getTime() + delay).getTime();
-
+						document.getElementById("error").innerHTML = "";
 						// Update the count down every 1 second
 						var x = setInterval(function() {
 
@@ -141,6 +141,7 @@
 	
 	function unlock(){
 		document.getElementById("button").disabled = false;
+		
 	}
 </script>
 </head>

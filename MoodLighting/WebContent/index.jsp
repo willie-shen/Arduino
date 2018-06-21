@@ -9,8 +9,17 @@
 <script>
 	function lock(){ //https://stackoverflow.com/questions/21457408/how-to-access-a-servlet-variable-inside-javascript check this
 		
+		if(document.getElementById("moodValue").value == ""){
+			document.getElementById("error").innerHTML = "Error: You did not input a value".fontcolor("red");
+			document.getElementById("moodValue").value = "";
+			document.getElementById("moodValue").reset();
+
+			return false;
+		}
 		var input = parseInt(document.getElementById("moodValue").value);
 	//	https://stackoverflow.com/questions/43015921/checking-if-input-is-integer-using-javascript
+	
+		
 		if(!Number.isInteger(+document.getElementById("moodValue").value)){
 			document.getElementById("error").innerHTML = "Error: You did not input an integer".fontcolor("red");
 			document.getElementById("moodValue").value = "";
